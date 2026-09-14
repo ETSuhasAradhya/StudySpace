@@ -82,16 +82,30 @@ export default function Sidebar({ currentFloorId, onSelectFloor, activeTab, setA
             </button>
 
             {user?.role === 'admin' && (
-              <button
-                type="button"
-                className={`sidebar-tab-btn ${activeTab === 'admin' ? 'active' : ''}`}
-                onClick={() => setActiveTab('admin')}
-              >
-                <div className="tab-left">
-                  <Shield size={16} className="tab-icon" />
-                  <span className="tab-name">Admin Console</span>
-                </div>
-              </button>
+              <>
+                <button
+                  type="button"
+                  className={`sidebar-tab-btn ${activeTab === 'verification' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('verification')}
+                >
+                  <div className="tab-left">
+                    <UserCheck size={16} className="tab-icon" />
+                    <span className="tab-name">Verify Registrations</span>
+                  </div>
+                  <span className="tab-badge" style={{ background: '#22c55e', color: '#fff' }}>Verify</span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`sidebar-tab-btn ${activeTab === 'admin' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('admin')}
+                >
+                  <div className="tab-left">
+                    <Shield size={16} className="tab-icon" />
+                    <span className="tab-name">Admin Console</span>
+                  </div>
+                </button>
+              </>
             )}
           </div>
         </div>

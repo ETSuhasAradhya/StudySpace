@@ -27,12 +27,18 @@ router.get('/', async (req, res) => {
             ELSE false 
           END AS is_reserved,
           r.id AS reservation_id,
-          r.user_id AS reserved_by_user_id
+          r.user_id AS reserved_by_user_id,
+          r.status AS reservation_status,
+          u.name AS reserved_by_name,
+          u.email AS reserved_by_email,
+          r.start_time AS reserved_start_time,
+          r.end_time AS reserved_end_time
         FROM seats s
         LEFT JOIN reservations r ON s.id = r.seat_id 
           AND r.reservation_date = $2
-          AND r.status = 'confirmed'
+          AND r.status IN ('confirmed', 'verified')
           AND (r.start_time < $4::time AND r.end_time > $3::time)
+        LEFT JOIN users u ON r.user_id = u.id
         WHERE s.space_id = $1
         ORDER BY s.id ASC
       `;

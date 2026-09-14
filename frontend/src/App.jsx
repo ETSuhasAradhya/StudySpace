@@ -5,6 +5,7 @@ import AuthPage from './pages/AuthPage';
 import SeatMapPage from './pages/SeatMapPage';
 import MyReservationsPage from './pages/MyReservationsPage';
 import AdminPage from './pages/AdminPage';
+import SeatVerificationPage from './pages/SeatVerificationPage';
 
 function MainApp() {
   const { user, loading } = useAuth();
@@ -47,6 +48,10 @@ function MainApp() {
 
         {activeTab === 'my-reservations' && (
           <MyReservationsPage />
+        )}
+
+        {activeTab === 'verification' && user.role === 'admin' && (
+          <SeatVerificationPage />
         )}
 
         {activeTab === 'admin' && user.role === 'admin' && (

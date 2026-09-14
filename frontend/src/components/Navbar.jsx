@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { BookOpen, User, LogOut, Shield, Calendar, LayoutGrid } from 'lucide-react';
+import { BookOpen, User, LogOut, Shield, Calendar, LayoutGrid, UserCheck } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const { user, logout } = useAuth();
@@ -38,13 +38,22 @@ export default function Navbar({ activeTab, setActiveTab }) {
             )}
 
             {user.role === 'admin' && (
-              <button 
-                className={`nav-btn ${activeTab === 'admin' ? 'active' : ''}`}
-                onClick={() => setActiveTab('admin')}
-              >
-                <Shield size={16} />
-                <span>Admin Console</span>
-              </button>
+              <>
+                <button 
+                  className={`nav-btn ${activeTab === 'verification' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('verification')}
+                >
+                  <UserCheck size={16} />
+                  <span>Verify Registrations</span>
+                </button>
+                <button 
+                  className={`nav-btn ${activeTab === 'admin' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('admin')}
+                >
+                  <Shield size={16} />
+                  <span>Admin Console</span>
+                </button>
+              </>
             )}
           </div>
         )}

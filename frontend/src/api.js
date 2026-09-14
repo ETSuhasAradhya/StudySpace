@@ -138,5 +138,13 @@ export const api = {
       headers: getHeaders()
     });
     return handleResponse(res);
+  },
+
+  async verifyReservation(id) {
+    const res = await fetch(`${API_BASE}/api/reservations/${id}/verify`, {
+      method: 'PUT',
+      headers: getHeaders()
+    });
+    return handleResponse(res);
   }
 };

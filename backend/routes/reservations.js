@@ -37,7 +37,7 @@ router.post('/', authenticateToken, async (req, res) => {
       FROM reservations
       WHERE seat_id = $1
         AND reservation_date = $2
-        AND status = 'confirmed'
+        AND status IN ('confirmed', 'verified')
         AND (start_time < $4::time AND end_time > $3::time)
       FOR UPDATE
     `;
@@ -168,6 +168,42 @@ router.put('/:id/cancel', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error cancelling reservation:', error);
     res.status(500).json({ error: 'Failed to cancel reservation.' });
+  }
+});
+
+// PUT /:id/verify - Toggle student attendance verification (Admin only)
+router.put('/:id/verify', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const existing = await query('SELECT * FROM reservations WHERE id = $1', [id]);
+    if (existing.rows.length === 0) {
+      return res.status(404).json({ error: 'Reservation not found.' });
+    }
+
+    const currentStatus = existing.rows[0].status;
+    if (currentStatus === 'cancelled') {
+      return res.status(400).json({ error: 'Cannot verify a cancelled reservation.' });
+    }
+
+    // Toggle between verified and confirmed
+    const newStatus = currentStatus === 'verified' ? 'confirmed' : 'verified';
+
+    const updated = await query(
+      `UPDATE reservations
+       SET status = $1
+       WHERE id = $2
+       RETURNING *`,
+      [newStatus, id]
+    );
+
+    res.json({
+      message: newStatus === 'verified' ? 'Student desk registration verified and marked present!' : 'Verification reverted to confirmed.',
+      reservation: updated.rows[0]
+    });
+  } catch (error) {
+    console.error('Error verifying reservation:', error);
+    res.status(500).json({ error: 'Failed to verify reservation.' });
   }
 });
 

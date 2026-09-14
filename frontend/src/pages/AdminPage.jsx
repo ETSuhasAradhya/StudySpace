@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../api.js';
-import { PlusCircle, Trash2, Shield, Calendar, Users, MapPin, Zap } from 'lucide-react';
+import { PlusCircle, Trash2, Shield, Calendar, Users, MapPin, Zap, UserCheck } from 'lucide-react';
+import SeatVerificationPage from './SeatVerificationPage.jsx';
 
 export default function AdminPage() {
-  const [activeSubTab, setActiveSubTab] = useState('spaces');
+  const [activeSubTab, setActiveSubTab] = useState('verification');
   const [spaces, setSpaces] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -125,6 +126,13 @@ export default function AdminPage() {
       {/* Sub tabs */}
       <div className="admin-subtabs">
         <button 
+          className={`admin-tab-btn ${activeSubTab === 'verification' ? 'active' : ''}`}
+          onClick={() => { setActiveSubTab('verification'); setError(''); setSuccess(''); }}
+        >
+          <UserCheck size={16} />
+          <span>Verify Registrations</span>
+        </button>
+        <button 
           className={`admin-tab-btn ${activeSubTab === 'spaces' ? 'active' : ''}`}
           onClick={() => { setActiveSubTab('spaces'); setError(''); setSuccess(''); }}
         >
@@ -142,6 +150,11 @@ export default function AdminPage() {
 
       {error && <div className="alert alert-error">{error}</div>}
       {success && <div className="alert alert-success">{success}</div>}
+
+      {/* TAB 0: STUDENT SEAT VERIFICATION */}
+      {activeSubTab === 'verification' && (
+        <SeatVerificationPage />
+      )}
 
       {/* TAB 1: SPACES MANAGEMENT */}
       {activeSubTab === 'spaces' && (

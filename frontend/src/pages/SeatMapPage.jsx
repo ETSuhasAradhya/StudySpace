@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../api.js';
+import { useAuth } from '../context/AuthContext';
 import { 
   Calendar, Clock, BookOpen, VolumeX, Book, User, 
-  CheckCircle2, AlertTriangle, Armchair, Zap, Sparkles, Shield, Layers
+  CheckCircle2, AlertTriangle, Armchair, Zap, Sparkles, Shield, Layers, UserCheck
 } from 'lucide-react';
 
 export default function SeatMapPage({ currentFloorId, onSelectFloor, onReservationSuccess }) {
+  const { user } = useAuth();
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
@@ -76,11 +78,38 @@ export default function SeatMapPage({ currentFloorId, onSelectFloor, onReservati
     if (groupName) setSelectedGroup(groupName);
 
     if (seat.is_reserved) {
+      if (user?.role === 'admin') {
+        setSelectedSeat(seat);
+        setError('');
+        return;
+      }
       setError(`Desk "${seat.seat_number}" is already reserved for ${startTime} – ${endTime}.`);
       return;
     }
     setError('');
     setSelectedSeat(seat);
+  };
+
+  const handleAdminVerifySeat = async (reservationId) => {
+    if (!reservationId) return;
+    setError('');
+    try {
+      const res = await api.verifyReservation(reservationId);
+      setSuccessMessage(res.message);
+      
+      const refreshed = await api.getSeats(currentFloorId, {
+        date,
+        start_time: startTime + ':00',
+        end_time: endTime + ':00'
+      });
+      setSeats(refreshed);
+      if (selectedSeat) {
+        const updated = refreshed.find(s => s.id === selectedSeat.id);
+        if (updated) setSelectedSeat(updated);
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to verify reservation.');
+    }
   };
 
   const handleReserve = async () => {
@@ -701,13 +730,30 @@ export default function SeatMapPage({ currentFloorId, onSelectFloor, onReservati
               <div className="selected-desk-highlight-box" style={{ marginTop: '12px' }}>
                 <div className="sd-badge-row">
                   <span className="sd-seat-code">{selectedSeat.seat_number}</span>
-                  <span className={`status-tag ${selectedSeat.is_reserved ? 'cancelled' : 'confirmed'}`}>
-                    {selectedSeat.is_reserved ? 'Reserved' : 'Ready to Book'}
+                  <span className={`status-tag ${selectedSeat.is_reserved ? (selectedSeat.reservation_status === 'verified' ? 'confirmed' : 'cancelled') : 'confirmed'}`}>
+                    {selectedSeat.is_reserved ? (selectedSeat.reservation_status === 'verified' ? 'Verified' : 'Reserved') : 'Ready to Book'}
                   </span>
                 </div>
                 <div className="sd-meta-text">
                   <span>📍 Floor {currentFloorId} • {floorMeta[currentFloorId]?.name.split('–')[1]}</span>
                   {selectedSeat.is_corner_seat && <span>🔒 Private Solo Desk with AC Socket & Lamp</span>}
+                  {selectedSeat.is_reserved && user?.role === 'admin' && (
+                    <div style={{ marginTop: '8px', padding: '8px 10px', background: '#eff6ff', borderRadius: '6px', border: '1px solid #bfdbfe' }}>
+                      <div style={{ fontWeight: '700', color: '#1e40af', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <UserCheck size={14} />
+                        <span>Registered Student</span>
+                      </div>
+                      <div style={{ fontWeight: '700', color: '#0f172a', fontSize: '0.88rem', marginTop: '2px' }}>
+                        {selectedSeat.reserved_by_name || 'Registered Student'}
+                      </div>
+                      <div style={{ color: '#475569', fontSize: '0.78rem' }}>
+                        {selectedSeat.reserved_by_email}
+                      </div>
+                      <div style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '4px' }}>
+                        Slot: {selectedSeat.reserved_start_time?.slice(0, 5) || startTime} – {selectedSeat.reserved_end_time?.slice(0, 5) || endTime}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -772,18 +818,35 @@ export default function SeatMapPage({ currentFloorId, onSelectFloor, onReservati
               </div>
             </div>
 
-            <button 
-              type="button" 
-              className="btn-fp-reserve"
-              onClick={handleReserve}
-              disabled={reserving || !selectedSeat || selectedSeat.is_reserved}
-            >
-              {reserving 
-                ? 'Reserving...' 
-                : (selectedSeat 
-                    ? `Reserve Desk ${selectedSeat.seat_number}` 
-                    : 'Select a Desk on Blueprint')}
-            </button>
+            {selectedSeat?.is_reserved && user?.role === 'admin' ? (
+              <button 
+                type="button" 
+                className="btn-primary"
+                onClick={() => handleAdminVerifySeat(selectedSeat.reservation_id)}
+                style={{ 
+                  width: '100%', 
+                  background: selectedSeat.reservation_status === 'verified' ? '#475569' : '#16a34a',
+                  padding: '12px',
+                  fontWeight: '700'
+                }}
+              >
+                <UserCheck size={16} />
+                <span>{selectedSeat.reservation_status === 'verified' ? 'Revert Verification' : 'Verify Student & Mark Present'}</span>
+              </button>
+            ) : (
+              <button 
+                type="button" 
+                className="btn-fp-reserve"
+                onClick={handleReserve}
+                disabled={reserving || !selectedSeat || selectedSeat.is_reserved}
+              >
+                {reserving 
+                  ? 'Reserving...' 
+                  : (selectedSeat 
+                      ? `Reserve Desk ${selectedSeat.seat_number}` 
+                      : 'Select a Desk on Blueprint')}
+              </button>
+            )}
           </div>
         </div>
       </div>

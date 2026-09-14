@@ -1,5 +1,10 @@
 # StudySpace – Smart Library & Study Space Reservation System
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-study--space--navy.vercel.app-blue?style=for-the-badge)](https://study-space-navy.vercel.app/)
+
+> **Live Production Website**: [https://study-space-navy.vercel.app/](https://study-space-navy.vercel.app/)  
+> **Source Code**: [https://github.com/ETSuhasAradhya/StudySpace](https://github.com/ETSuhasAradhya/StudySpace)
+
 StudySpace is a full-stack web application designed for university campuses to manage desk and study space reservations with real-time architectural floor plans, role-based access control, and transaction-safe overlap prevention.
 
 ---

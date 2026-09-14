@@ -1,8 +1,9 @@
 # StudySpace – Smart Library & Study Space Reservation System
 ### 2nd-Year Computer Science & Engineering University Project Report
 **Course**: Web Applications & Database Management Systems  
+**Live Deployed Application**: [https://study-space-navy.vercel.app/](https://study-space-navy.vercel.app/)  
 **GitHub Repository**: [https://github.com/ETSuhasAradhya/StudySpace](https://github.com/ETSuhasAradhya/StudySpace)  
-**Deployment Target**: Vercel (Frontend) • Render (Backend) • Neon (Cloud Database)  
+**Deployment Target**: Vercel (Frontend & Serverless REST API) • Neon (Cloud PostgreSQL)  
 
 ---
 

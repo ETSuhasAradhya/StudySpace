@@ -1,7 +1,7 @@
 # StudySpace – Smart Library & Study Space Reservation System
 ### 2nd-Year Computer Science & Engineering University Project Report
 **Course**: Web Applications & Database Management Systems  
-**Architecture**: React (Vite) + Node.js (Express) + PostgreSQL (Neon Cloud DB) + JWT  
+**GitHub Repository**: [https://github.com/ETSuhasAradhya/StudySpace](https://github.com/ETSuhasAradhya/StudySpace)  
 **Deployment Target**: Vercel (Frontend) • Render (Backend) • Neon (Cloud Database)  
 
 ---

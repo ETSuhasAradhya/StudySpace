@@ -21,8 +21,14 @@ StudySpace is a full-stack web application designed for university campuses to m
 
 ## 🚀 Quick Start (Local Setup)
 
-### 1. Prerequisites
+### 1. Prerequisites & Repository Clone
 - Node.js 18+ & npm
+- Git
+
+```bash
+git clone https://github.com/ETSuhasAradhya/StudySpace.git
+cd StudySpace
+```
 
 ### 2. Backend Setup
 ```bash

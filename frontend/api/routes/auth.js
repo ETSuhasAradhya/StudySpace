@@ -1,5 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import { generateSecret, generateURI, verifySync } from 'otplib';
+import qrcode from 'qrcode';
 import { query } from '../db.js';
 import { authenticateToken, generateToken } from '../authMiddleware.js';
 
@@ -48,7 +50,7 @@ router.post('/register', async (req, res) => {
 // POST /login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, totp_token } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required.' });
@@ -66,6 +68,22 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
+    // Multi-Factor Authentication Check (TOTP)
+    if (user.two_factor_enabled) {
+      if (!totp_token) {
+        return res.status(200).json({
+          requires2FA: true,
+          email: user.email,
+          message: 'Two-factor authentication required. Please enter 6-digit code from Google/Microsoft Authenticator.'
+        });
+      }
+
+      const isValidTOTP = verifySync({ token: String(totp_token).trim(), secret: user.two_factor_secret }).valid === true;
+      if (!isValidTOTP) {
+        return res.status(401).json({ error: 'Invalid 6-digit 2FA security code. Please check your Authenticator app.' });
+      }
+    }
+
     const token = generateToken(user);
 
     res.json({
@@ -76,6 +94,7 @@ router.post('/login', async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        two_factor_enabled: Boolean(user.two_factor_enabled),
         created_at: user.created_at
       }
     });
@@ -85,11 +104,90 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// POST /2fa/generate (Protected)
+router.post('/2fa/generate', authenticateToken, async (req, res) => {
+  try {
+    const secret = generateSecret();
+    const otpauth = generateURI({ issuer: 'StudySpace', label: req.user.email, secret });
+    const qrCodeUrl = await qrcode.toDataURL(otpauth);
+
+    await query('UPDATE users SET two_factor_secret = $1 WHERE id = $2', [secret, req.user.id]);
+
+    res.json({
+      message: 'TOTP secret generated successfully. Scan the QR code using Google Authenticator or Microsoft Authenticator.',
+      secret,
+      otpauth,
+      qrCodeUrl
+    });
+  } catch (error) {
+    console.error('2FA generate error:', error);
+    res.status(500).json({ error: 'Failed to generate 2FA credentials.' });
+  }
+});
+
+// POST /2fa/verify (Protected)
+router.post('/2fa/verify', authenticateToken, async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ error: '6-digit TOTP code is required.' });
+    }
+
+    const userRes = await query('SELECT two_factor_secret FROM users WHERE id = $1', [req.user.id]);
+    const secret = userRes.rows[0]?.two_factor_secret;
+
+    if (!secret) {
+      return res.status(400).json({ error: 'No 2FA secret found. Call /api/auth/2fa/generate first.' });
+    }
+
+    const isValid = verifySync({ token: String(token).trim(), secret }).valid === true;
+    if (!isValid) {
+      return res.status(400).json({ error: 'Invalid 6-digit TOTP code. Verification failed.' });
+    }
+
+    await query('UPDATE users SET two_factor_enabled = true WHERE id = $1', [req.user.id]);
+
+    res.json({
+      success: true,
+      message: 'Multi-Factor Authentication (MFA) successfully enabled with Authenticator App!'
+    });
+  } catch (error) {
+    console.error('2FA verify error:', error);
+    res.status(500).json({ error: 'Failed to verify 2FA code.' });
+  }
+});
+
+// POST /2fa/disable (Protected)
+router.post('/2fa/disable', authenticateToken, async (req, res) => {
+  try {
+    const { token } = req.body;
+    const userRes = await query('SELECT two_factor_secret FROM users WHERE id = $1', [req.user.id]);
+    const secret = userRes.rows[0]?.two_factor_secret;
+
+    if (secret && token) {
+      const isValid = verifySync({ token: String(token).trim(), secret }).valid === true;
+      if (!isValid) {
+        return res.status(400).json({ error: 'Invalid 2FA code. Cannot disable MFA.' });
+      }
+    }
+
+    await query('UPDATE users SET two_factor_enabled = false, two_factor_secret = NULL WHERE id = $1', [req.user.id]);
+
+    res.json({
+      success: true,
+      message: 'Multi-factor authentication disabled.'
+    });
+  } catch (error) {
+    console.error('2FA disable error:', error);
+    res.status(500).json({ error: 'Failed to disable 2FA.' });
+  }
+});
+
 // GET /me
 router.get('/me', authenticateToken, async (req, res) => {
   try {
     const result = await query(
-      'SELECT id, name, email, role, created_at FROM users WHERE id = $1',
+      'SELECT id, name, email, role, two_factor_enabled, created_at FROM users WHERE id = $1',
       [req.user.id]
     );
 

@@ -12,6 +12,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const INSTANCE_ID = process.env.INSTANCE_ID || 'backend-standalone';
+
 // Middlewares
 app.use(cors({
   origin: '*', // Allow all origins for simplicity in local & deployment
@@ -19,9 +21,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Request logger for development
+// Request logger with Instance ID
 app.use((req, res, next) => {
-  console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
+  res.setHeader('X-Backend-Instance', INSTANCE_ID);
+  console.log(`[${new Date().toLocaleTimeString()}][${INSTANCE_ID}] ${req.method} ${req.url}`);
   next();
 });
 
@@ -36,8 +39,9 @@ app.use('/api/reservations', reservationsRoutes);
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
+    instance: INSTANCE_ID,
     service: 'StudySpace Backend API',
-    message: 'Server is healthy and ready to accept requests.',
+    message: `Server is healthy and ready to accept requests on ${INSTANCE_ID}.`,
     timestamp: new Date().toISOString()
   });
 });

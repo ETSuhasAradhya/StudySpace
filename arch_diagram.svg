@@ -1,0 +1,73 @@
+<svg width="100%" height="240" viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background groups -->
+      <rect x="10" y="10" width="160" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="90" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">Client Tier</text>
+
+      <rect x="190" y="10" width="170" height="220" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="2" stroke-dasharray="4"/>
+      <text x="275" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#c2410c">Edge & Cloud Bursting</text>
+
+      <rect x="380" y="10" width="170" height="220" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="465" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e40af">Docker Cluster Tier</text>
+
+      <rect x="570" y="10" width="160" height="220" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="650" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">Persistence Tier</text>
+
+      <!-- Client Nodes -->
+      <rect x="25" y="60" width="130" height="40" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="90" y="82" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">Desktop Browser</text>
+      <text x="90" y="93" text-anchor="middle" font-size="7.5" fill="#64748b">Vercel Web App</text>
+
+      <rect x="25" y="120" width="130" height="40" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="90" y="142" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">Mobile Clients</text>
+      <text x="90" y="153" text-anchor="middle" font-size="7.5" fill="#64748b">iOS / Android / PWA</text>
+
+      <!-- Edge / Cloud Bursting Nodes -->
+      <rect x="205" y="55" width="140" height="50" rx="5" fill="#ffedd5" stroke="#f97316"/>
+      <text x="275" y="75" text-anchor="middle" font-size="9" font-weight="bold" fill="#9a3412">Cloudflare Edge Cache</text>
+      <text x="275" y="88" text-anchor="middle" font-size="7.5" fill="#ea580c">TTL: 15s (Seat Inventory)</text>
+      <text x="275" y="98" text-anchor="middle" font-size="7" fill="#7c2d12">DDoS / Bot Rate Limit</text>
+
+      <rect x="205" y="130" width="140" height="50" rx="5" fill="#fed7aa" stroke="#ea580c"/>
+      <text x="275" y="150" text-anchor="middle" font-size="9" font-weight="bold" fill="#7c2d12">Serverless Burst Tier</text>
+      <text x="275" y="163" text-anchor="middle" font-size="7.5" fill="#c2410c">AWS Lambda / Vercel API</text>
+      <text x="275" y="173" text-anchor="middle" font-size="7" fill="#9a3412">Trigger: LB Latency &gt; 500ms</text>
+
+      <!-- Ingress & Compute -->
+      <rect x="395" y="45" width="140" height="35" rx="5" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="465" y="62" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#1e40af">Nginx Load Balancer</text>
+      <text x="465" y="73" text-anchor="middle" font-size="7.5" fill="#2563eb">studyspace-nginx :8000</text>
+
+      <rect x="395" y="90" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="105" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-1 :5001</text>
+      <text x="465" y="116" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <rect x="395" y="130" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="145" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-2 :5002</text>
+      <text x="465" y="156" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <rect x="395" y="170" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="185" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-3 :5003</text>
+      <text x="465" y="196" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <!-- Persistence Node -->
+      <rect x="585" y="70" width="130" height="90" rx="6" fill="#dcfce7" stroke="#22c55e"/>
+      <text x="650" y="95" text-anchor="middle" font-size="9" font-weight="bold" fill="#14532d">Neon PostgreSQL</text>
+      <text x="650" y="109" text-anchor="middle" font-size="7.5" fill="#166534">Serverless DB (AWS us-east-2)</text>
+      <text x="650" y="122" text-anchor="middle" font-size="7.5" fill="#15803d">Port 443 (HTTPS/WSS Pool)</text>
+      <text x="650" y="135" text-anchor="middle" font-size="7" fill="#475569">Tables: study_spaces, seats,</text>
+      <text x="650" y="145" text-anchor="middle" font-size="7" fill="#475569">reservations, users</text>
+
+      <!-- Connectors -->
+      <line x1="155" y1="80" x2="205" y2="80" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="155" y1="140" x2="205" y2="80" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="345" y1="80" x2="395" y2="60" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="345" y1="155" x2="585" y2="120" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3"/>
+      
+      <line x1="465" y1="80" x2="465" y2="90" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="465" y1="80" x2="465" y2="130" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="465" y1="80" x2="465" y2="170" stroke="#3b82f6" stroke-width="1.2"/>
+
+      <line x1="535" y1="106" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+      <line x1="535" y1="146" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+      <line x1="535" y1="186" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+    </svg>

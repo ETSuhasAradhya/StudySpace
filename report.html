@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BACSE344 Digital Assignment 3 (DA-3) - StudySpace</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 14mm 16mm 14mm;
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.55;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    .header-card {
+      border: 2px solid #2563eb;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+    }
+
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 19pt;
+      color: #1e3a8a;
+      letter-spacing: -0.5px;
+    }
+
+    .header-card h2 {
+      margin: 0 0 10px 0;
+      font-size: 13pt;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 16px;
+      font-size: 9pt;
+      border-top: 1px solid #bfdbfe;
+      padding-top: 10px;
+      margin-top: 6px;
+    }
+
+    .meta-item strong {
+      color: #1e40af;
+    }
+
+    h1.section-title {
+      font-size: 14pt;
+      color: #0f172a;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 4px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h2.subsection-title {
+      font-size: 12pt;
+      color: #1e40af;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      border-left: 4px solid #2563eb;
+      padding-left: 8px;
+    }
+
+    h3 {
+      font-size: 10.5pt;
+      color: #334155;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 0 0 10px 0;
+      text-align: justify;
+    }
+
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid #3b82f6;
+      padding: 10px 14px;
+      margin: 12px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 9.5pt;
+    }
+
+    .callout.security {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .callout.warning {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 8.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .highlight-cell {
+      font-weight: bold;
+      color: #1e40af;
+    }
+
+    .success-cell {
+      font-weight: bold;
+      color: #059669;
+    }
+
+    .danger-cell {
+      font-weight: bold;
+      color: #dc2626;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 8pt;
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      margin: 10px 0 14px 0;
+      page-break-inside: avoid;
+      line-height: 1.4;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.5pt;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .diagram-container {
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px;
+      background: #ffffff;
+      margin: 14px 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-primary { background: #dbeafe; color: #1e40af; }
+    .badge-success { background: #d1fae5; color: #065f46; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid #cbd5e1;
+      font-size: 8pt;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover / Header Header -->
+  <div class="header-card">
+    <h1>BACSE344: Cloud Infrastructure & Architecture</h1>
+    <h2>Digital Assignment 3 (DA-3) – Scalable & Secure Cloud Deployment</h2>
+    <div class="meta-grid">
+      <div class="meta-item"><strong>Course Slot:</strong> C2 (Academic Year 2025–2026)</div>
+      <div class="meta-item"><strong>Application Domain:</strong> Higher Education Campus Infrastructure</div>
+      <div class="meta-item"><strong>Application Name:</strong> StudySpace (University Library Reservation)</div>
+      <div class="meta-item"><strong>Live Frontend URL:</strong> <a href="https://study-space-navy.vercel.app/" target="_blank">study-space-navy.vercel.app</a></div>
+      <div class="meta-item"><strong>Managed Database:</strong> Neon Serverless Cloud PostgreSQL (AWS us-east-2)</div>
+      <div class="meta-item"><strong>GitHub Repository:</strong> <a href="https://github.com/ETSuhasAradhya/StudySpace" target="_blank">ETSuhasAradhya/StudySpace</a> (Branch: <code>assignment-3</code>)</div>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="callout">
+    <strong>Executive Overview:</strong> StudySpace solves university study space contention and seat hoarding across campus library study halls. Building on the core cloud assets deployed in DA-1 and DA-2, Digital Assignment 3 implements enterprise-grade horizontal scaling behind a hardened <strong>Nginx reverse proxy</strong> with automated zero-packet-loss failover (<code>proxy_next_upstream</code>), coupled with end-to-end security hardening via <strong>salted bcrypt password encryption</strong>, <strong>RFC 6238 TOTP Multi-Factor Authentication</strong>, <strong>Role-Based Access Control (RBAC)</strong>, <strong>non-root multi-stage Docker containerization</strong>, and regulatory compliance mapping with <strong>GDPR (Articles 25 & 32)</strong> and India's <strong>DPDPA 2023</strong>.
+  </div>
+
+  <!-- ========================================== -->
+  <!-- QUESTION 1: SCALE (5 MARKS) -->
+  <!-- ========================================== -->
+  <h1 class="section-title">Question 1: Scale (5 Marks)</h1>
+
+  <h2 class="subsection-title">1(a). Peak-Demand Scenario & High-Availability Cluster Ingress</h2>
+  <p>
+    <strong>Peak-Demand Scenario (Exam Week 08:00 AM Desk Rush):</strong> During semester examination weeks, library management opens online seat reservations at <strong>08:00:00 AM sharp</strong> for same-day quiet carrels, power-outlet desks, and collaborative rooms across Floors 1 to 4. Over 2,500 active university students concurrently refresh the portal within a 60-second window to claim scarce corner desks and quiet research cubicles.
+  </p>
+  <p>
+    <strong>Hardest-Hit API Identified:</strong> <code>GET /api/spaces/:spaceId/seats</code>. This endpoint is heavily read-intensive, performing real-time queries against table inventories (<code>seats</code>) joined with active reservation locks (<code>reservations</code>). Unmitigated, this endpoint causes thread-pool exhaustion and 504 Gateway Timeouts under sudden traffic spikes.
+  </p>
+  <p>
+    <strong>Containerized Cluster Setup:</strong> An Nginx reverse proxy load balancer routes traffic across 3 independent, containerized backend instances:
+  </p>
+  <ul>
+    <li><code>studyspace-nginx</code>: Port <code>8000:80</code> (Load balancer entrypoint)</li>
+    <li><code>studyspace-backend-1</code>: Port <code>5001:5000</code> (Container Node.js instance 1)</li>
+    <li><code>studyspace-backend-2</code>: Port <code>5002:5000</code> (Container Node.js instance 2)</li>
+    <li><code>studyspace-backend-3</code>: Port <code>5003:5000</code> (Container Node.js instance 3)</li>
+    <li><code>Neon Serverless DB</code>: Cloud PostgreSQL instance over SSL/TLS (Ports 443 & 5432)</li>
+  </ul>
+
+  <p><strong>Live Round-Robin Distribution Verification:</strong> Each backend container injects the <code>X-Backend-Instance</code> header. Successive requests to <code>http://localhost:8000/api/health</code> cycle sequentially across all nodes:</p>
+  <pre><code>Request 1 -> X-Backend-Instance: backend-2
+Request 2 -> X-Backend-Instance: backend-3
+Request 3 -> X-Backend-Instance: backend-1
+Request 4 -> X-Backend-Instance: backend-2
+Request 5 -> X-Backend-Instance: backend-3
+Request 6 -> X-Backend-Instance: backend-1
+[Verified: 1:1:1 Cyclic Round-Robin Dispatching without Session Sticking]</code></pre>
+
+  <h2 class="subsection-title">1(b). 1,000-Request Benchmark & Scale Performance Analysis</h2>
+  <p>
+    An automated benchmark suite (<code>benchmarks/load-test.js</code>) dispatched 1,000 requests against the seat status API (<code>/api/spaces/1/seats</code>) under high concurrency ($C=40$) comparing a single instance against the 3-instance Nginx cluster.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Performance Parameter</th>
+        <th>Single Backend Instance (`backend-1`)</th>
+        <th>3 Instances Behind Nginx Cluster</th>
+        <th>Observed Scale Improvement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Total Requests Dispatched</strong></td>
+        <td>1,000 requests</td>
+        <td>1,000 requests</td>
+        <td>Identical load pressure</td>
+      </tr>
+      <tr>
+        <td><strong>Concurrency ($C$)</strong></td>
+        <td>40 concurrent connections</td>
+        <td>40 concurrent connections</td>
+        <td>Standardized benchmark</td>
+      </tr>
+      <tr>
+        <td><strong>Elapsed Test Duration</strong></td>
+        <td>7.05 seconds</td>
+        <td>6.92 seconds</td>
+        <td class="success-cell">Cluster finished faster</td>
+      </tr>
+      <tr>
+        <td><strong>Throughput (RPS)</strong></td>
+        <td>141.74 req/sec</td>
+        <td>144.59 req/sec</td>
+        <td class="success-cell">+2.01% Higher Throughput</td>
+      </tr>
+      <tr>
+        <td><strong>Average Latency</strong></td>
+        <td>277.40 ms</td>
+        <td>271.99 ms</td>
+        <td class="success-cell">-5.41 ms reduction</td>
+      </tr>
+      <tr>
+        <td><strong>Median (p50) Latency</strong></td>
+        <td>242.06 ms</td>
+        <td>239.17 ms</td>
+        <td class="success-cell">-2.89 ms reduction</td>
+      </tr>
+      <tr>
+        <td><strong>90th Percentile (p90) Latency</strong></td>
+        <td>309.63 ms</td>
+        <td>268.22 ms</td>
+        <td class="success-cell">13.37% Faster</td>
+      </tr>
+      <tr>
+        <td><strong>95th Percentile (p95) Tail Latency</strong></td>
+        <td><strong>405.19 ms</strong></td>
+        <td><strong>316.24 ms</strong></td>
+        <td class="success-cell"><strong>21.95% Tail Latency Reduction (-88.95 ms)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>HTTP Success Rate</strong></td>
+        <td>100% (1,000 / 1,000)</td>
+        <td>100% (1,000 / 1,000)</td>
+        <td class="success-cell">Zero dropped requests</td>
+      </tr>
+      <tr>
+        <td><strong>Cluster Load Balancing</strong></td>
+        <td>`backend-1`: 1,000 (100%)</td>
+        <td>`b-1`: 334 | `b-2`: 333 | `b-3`: 333</td>
+        <td class="highlight-cell">Exact 33.3% Balanced Split</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Analytical Takeaway:</strong> Although network latency to the cloud database introduces an RTT floor (~220ms), horizontal clustering prevents queue saturation, reducing <strong>95th percentile tail latency by 21.95%</strong> (405.19 ms $\rightarrow$ 316.24 ms).
+  </p>
+
+  <div class="page-break"></div>
+
+  <h2 class="subsection-title">1(c). Mid-Flight Server Failover & Zero-Loss Resilience</h2>
+  <p>
+    High availability mandates zero dropped connections when an application node fails. Using <code>benchmarks/failover-test.js</code>, traffic was continuously dispatched at $C=10$ while container <code>studyspace-backend-2</code> was abruptly stopped mid-flight at timestamp $T = 3.0\text{ seconds}$.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Experiment Parameter</th>
+        <th>Phase 1: Baseline (Unhardened Nginx)</th>
+        <th>Phase 2: Resilient (`proxy_next_upstream`)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Nginx Directives</strong></td>
+        <td><code>proxy_next_upstream off;</code></td>
+        <td><code>proxy_next_upstream error timeout http_500 http_502 http_503 http_504;</code></td>
+      </tr>
+      <tr>
+        <td><strong>Total Requests Dispatched</strong></td>
+        <td>101 requests</td>
+        <td>191 requests</td>
+      </tr>
+      <tr>
+        <td><strong>Mid-Flight Failed Instance</strong></td>
+        <td><code>studyspace-backend-2</code> killed at T=3s</td>
+        <td><code>studyspace-backend-2</code> killed at T=3s</td>
+      </tr>
+      <tr>
+        <td><strong>Successful Requests (200 OK)</strong></td>
+        <td>88</td>
+        <td class="success-cell"><strong>191 (100%)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Failed Requests</strong></td>
+        <td class="danger-cell"><strong>13 failed (12.87% packet loss)</strong></td>
+        <td class="success-cell"><strong>0 failed (0.00% packet loss)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Error Manifestation</strong></td>
+        <td><code>ERR_TIMEOUT</code> / 504 Gateway Timeout</td>
+        <td class="success-cell">None (Zero student-facing errors)</td>
+      </tr>
+      <tr>
+        <td><strong>Traffic Redistribution</strong></td>
+        <td>Requests routed to dead node were dropped</td>
+        <td class="highlight-cell">Seamless failover: `b-1`: 89, `b-3`: 89, `b-2`: 13</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Nginx Resilience Configuration (<code>nginx/nginx.conf</code>):</strong></p>
+  <pre><code>upstream backend_cluster {
+    server backend-1:5000 max_fails=3 fail_timeout=10s;
+    server backend-2:5000 max_fails=3 fail_timeout=10s;
+    server backend-3:5000 max_fails=3 fail_timeout=10s;
+}
+
+server {
+    listen 80;
+    location / {
+        proxy_pass http://backend_cluster;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # Automatic Failover & Retry Configuration (Question 1c)
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_next_upstream_tries 3;
+        proxy_next_upstream_timeout 10s;
+        proxy_connect_timeout 1s;
+        proxy_read_timeout 5s;
+        proxy_send_timeout 5s;
+    }
+}</code></pre>
+
+  <h2 class="subsection-title">1(d). Comprehensive Cloud Architecture Diagram with Cloud Bursting</h2>
+  <p>
+    The production cloud topology implements tiered caching, reverse proxy load balancing, and automated edge cloud bursting:
+  </p>
+
+  <div class="diagram-container">
+    <svg width="100%" height="240" viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background groups -->
+      <rect x="10" y="10" width="160" height="220" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="90" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">Client Tier</text>
+
+      <rect x="190" y="10" width="170" height="220" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="2" stroke-dasharray="4"/>
+      <text x="275" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#c2410c">Edge & Cloud Bursting</text>
+
+      <rect x="380" y="10" width="170" height="220" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="465" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e40af">Docker Cluster Tier</text>
+
+      <rect x="570" y="10" width="160" height="220" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="650" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">Persistence Tier</text>
+
+      <!-- Client Nodes -->
+      <rect x="25" y="60" width="130" height="40" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="90" y="82" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">Desktop Browser</text>
+      <text x="90" y="93" text-anchor="middle" font-size="7.5" fill="#64748b">Vercel Web App</text>
+
+      <rect x="25" y="120" width="130" height="40" rx="5" fill="#ffffff" stroke="#94a3b8"/>
+      <text x="90" y="142" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e293b">Mobile Clients</text>
+      <text x="90" y="153" text-anchor="middle" font-size="7.5" fill="#64748b">iOS / Android / PWA</text>
+
+      <!-- Edge / Cloud Bursting Nodes -->
+      <rect x="205" y="55" width="140" height="50" rx="5" fill="#ffedd5" stroke="#f97316"/>
+      <text x="275" y="75" text-anchor="middle" font-size="9" font-weight="bold" fill="#9a3412">Cloudflare Edge Cache</text>
+      <text x="275" y="88" text-anchor="middle" font-size="7.5" fill="#ea580c">TTL: 15s (Seat Inventory)</text>
+      <text x="275" y="98" text-anchor="middle" font-size="7" fill="#7c2d12">DDoS / Bot Rate Limit</text>
+
+      <rect x="205" y="130" width="140" height="50" rx="5" fill="#fed7aa" stroke="#ea580c"/>
+      <text x="275" y="150" text-anchor="middle" font-size="9" font-weight="bold" fill="#7c2d12">Serverless Burst Tier</text>
+      <text x="275" y="163" text-anchor="middle" font-size="7.5" fill="#c2410c">AWS Lambda / Vercel API</text>
+      <text x="275" y="173" text-anchor="middle" font-size="7" fill="#9a3412">Trigger: LB Latency &gt; 500ms</text>
+
+      <!-- Ingress & Compute -->
+      <rect x="395" y="45" width="140" height="35" rx="5" fill="#dbeafe" stroke="#3b82f6"/>
+      <text x="465" y="62" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#1e40af">Nginx Load Balancer</text>
+      <text x="465" y="73" text-anchor="middle" font-size="7.5" fill="#2563eb">studyspace-nginx :8000</text>
+
+      <rect x="395" y="90" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="105" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-1 :5001</text>
+      <text x="465" y="116" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <rect x="395" y="130" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="145" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-2 :5002</text>
+      <text x="465" y="156" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <rect x="395" y="170" width="140" height="32" rx="4" fill="#ffffff" stroke="#60a5fa"/>
+      <text x="465" y="185" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e3a8a">backend-3 :5003</text>
+      <text x="465" y="196" text-anchor="middle" font-size="7" fill="#64748b">node:20-alpine (UID 1000)</text>
+
+      <!-- Persistence Node -->
+      <rect x="585" y="70" width="130" height="90" rx="6" fill="#dcfce7" stroke="#22c55e"/>
+      <text x="650" y="95" text-anchor="middle" font-size="9" font-weight="bold" fill="#14532d">Neon PostgreSQL</text>
+      <text x="650" y="109" text-anchor="middle" font-size="7.5" fill="#166534">Serverless DB (AWS us-east-2)</text>
+      <text x="650" y="122" text-anchor="middle" font-size="7.5" fill="#15803d">Port 443 (HTTPS/WSS Pool)</text>
+      <text x="650" y="135" text-anchor="middle" font-size="7" fill="#475569">Tables: study_spaces, seats,</text>
+      <text x="650" y="145" text-anchor="middle" font-size="7" fill="#475569">reservations, users</text>
+
+      <!-- Connectors -->
+      <line x1="155" y1="80" x2="205" y2="80" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="155" y1="140" x2="205" y2="80" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="345" y1="80" x2="395" y2="60" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="345" y1="155" x2="585" y2="120" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3"/>
+      
+      <line x1="465" y1="80" x2="465" y2="90" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="465" y1="80" x2="465" y2="130" stroke="#3b82f6" stroke-width="1.2"/>
+      <line x1="465" y1="80" x2="465" y2="170" stroke="#3b82f6" stroke-width="1.2"/>
+
+      <line x1="535" y1="106" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+      <line x1="535" y1="146" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+      <line x1="535" y1="186" x2="585" y2="115" stroke="#16a34a" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <p>
+    <strong>Cloud Bursting & Edge Computing Architecture:</strong>
+  </p>
+  <ul>
+    <li><strong>Edge Computing Component (Cloudflare Edge Cache):</strong> Short TTL (15s) caching absorbs over 80% of identical read requests during the 08:00 AM rush at regional PoPs before reaching the origin load balancer.</li>
+    <li><strong>Cloud Bursting Trigger:</strong> If on-premise cluster CPU load exceeds 80% or origin response time exceeds 500ms, the DNS router spills surplus traffic into elastic serverless functions (AWS Lambda) connected to Neon's pooler.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- ========================================== -->
+  <!-- QUESTION 2: SECURE (5 MARKS) -->
+  <!-- ========================================== -->
+  <h1 class="section-title">Question 2: Secure (5 Marks)</h1>
+
+  <h2 class="subsection-title">2(a). Sensitive University Records & Salted Bcrypt Hashing</h2>
+  <p>
+    <strong>Identified Sensitive Student Records:</strong>
+  </p>
+  <ul>
+    <li><strong>Personally Identifiable Information (PII):</strong> Student legal name, institutional email address (<code>@vit.ac.in</code>), contact details, and student roll number.</li>
+    <li><strong>Physical Presence & Behavioral Data:</strong> Reservation history, timestamped desk occupancy, preferred study zones, and library check-in verifications.</li>
+    <li><strong>Security Credentials:</strong> Passwords and dynamic TOTP two-factor secret keys.</li>
+  </ul>
+
+  <p>
+    <strong>Cryptographic Implementation (Bcrypt):</strong> Passwords undergo irreversible one-way salted hashing via <code>bcryptjs</code> using a cost factor of 10 ($2^{10} = 1024$ key expansion rounds). Plaintext passwords are never persisted to disk or log sinks:
+  </p>
+  <pre><code>const saltRounds = 10;
+const passwordHash = await bcrypt.hash(plaintextPassword, saltRounds);</code></pre>
+
+  <p><strong>Empirical Neon Cloud Database Proof:</strong></p>
+  <pre><code>SELECT id, name, email, role, password_hash, two_factor_enabled FROM users;
+
+[
+  {
+    "id": 1,
+    "name": "Campus Admin",
+    "email": "admin@studyspace.com",
+    "role": "admin",
+    "password_hash": "$2a$10$4MEVS4C3ia7IQoZbo.Rrf.Kodsyw/DHID4NHTsUUIxG/YBzdkHm9O",
+    "two_factor_enabled": false
+  },
+  {
+    "id": 8,
+    "name": "Security Audit Student",
+    "email": "audit_student_1793620924645@vit.ac.in",
+    "role": "student",
+    "password_hash": "$2a$10$Bn0Sl3kEQGQk0ta88cFEbOLp89vBzXdhTWUXLqOOui7RgmWCvIlSm",
+    "two_factor_enabled": true
+  }
+]</code></pre>
+  <p>
+    <em>Verification:</em> The <code>$2a$10$</code> prefix denotes Modular Crypt Format with algorithm 2a and 10 salt rounds. Each account receives a unique 128-bit salt, preventing dictionary attacks and rainbow-table matching.
+  </p>
+
+  <h2 class="subsection-title">2(b). Multi-Factor Authentication (TOTP) & Role-Based Access Control (RBAC)</h2>
+  
+  <p><strong>1. RFC 6238 TOTP Multi-Factor Authentication:</strong></p>
+  <ul>
+    <li><strong>Secret Generation (<code>POST /api/auth/2fa/generate</code>):</strong> Returns a cryptographic Base32 secret (<code>GNY25CBIFNXCS6JRRTHCE765QCJEH6U4</code>) and an <code>otpauth://</code> QR code.</li>
+    <li><strong>Activation (<code>POST /api/auth/2fa/verify</code>):</strong> Student scans into Google/Microsoft Authenticator and validates with 6-digit dynamic code <code>560604</code>.</li>
+    <li><strong>Login Challenge (<code>POST /api/auth/login</code>):</strong> If 2FA is active, login requests without TOTP are rejected with <code>requires2FA: true</code>. Valid TOTP issuance yields the signed JWT.</li>
+  </ul>
+
+  <p><strong>2. Role-Based Access Control (RBAC) Enforcement:</strong></p>
+  <pre><code>// 1. Unauthenticated Request (Missing JWT Token)
+POST /api/spaces/1/seats -> HTTP 401 Unauthorized
+Payload: {"error": "Access denied. No authentication token provided."}
+
+// 2. Privilege Escalation Prevention (Student Token accessing Admin Route)
+POST /api/spaces/1/seats [Bearer student_token] -> HTTP 403 Forbidden
+Payload: {"error": "Forbidden. Admin privileges required."}
+
+// 3. Authorized Administrator Request
+POST /api/auth/login [admin@studyspace.com] -> HTTP 200 OK (Issued role: 'admin')</code></pre>
+
+  <h2 class="subsection-title">2(c). Container Image Hardening & Vulnerability Scan (Trivy)</h2>
+  <p>
+    The production container was hardened against supply-chain attacks by adopting a multi-stage Alpine build, non-root execution (<code>USER node</code> UID 1000), and <code>dumb-init</code> process reaping.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Hardening Metric</th>
+        <th>Baseline Image (`node:18` Root)</th>
+        <th>Hardened Production Image (`node:20-alpine` Non-Root)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Base Operating System</strong></td>
+        <td>Debian GNU/Linux 12 (bookworm)</td>
+        <td>Alpine Linux 3.20 (Minimal musl libc)</td>
+      </tr>
+      <tr>
+        <td><strong>Container Image Size</strong></td>
+        <td><strong>1,098 MB (1.1 GB)</strong></td>
+        <td class="success-cell"><strong>148 MB (86.5% Attack Surface Reduction)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Process Execution User</strong></td>
+        <td class="danger-cell"><code>root</code> (UID 0 - Full host breakout risk)</td>
+        <td class="success-cell"><code>node</code> (UID 1000 - Least Privilege)</td>
+      </tr>
+      <tr>
+        <td><strong>Process Reaper (PID 1)</strong></td>
+        <td>None (Default Node PID 1 zombie risk)</td>
+        <td class="success-cell"><code>dumb-init</code> (Graceful signal & zombie reaper)</td>
+      </tr>
+      <tr>
+        <td><strong>Vulnerabilities: CRITICAL</strong></td>
+        <td class="danger-cell"><strong>18 Critical CVEs</strong></td>
+        <td class="success-cell"><strong>0 Critical CVEs</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Vulnerabilities: HIGH</strong></td>
+        <td class="danger-cell"><strong>64 High CVEs</strong></td>
+        <td class="success-cell"><strong>1 High CVE (Low-risk Node runtime)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Total Known CVEs</strong></td>
+        <td class="danger-cell"><strong>224+ Vulnerabilities</strong></td>
+        <td class="success-cell"><strong>3 Vulnerabilities (98.6% CVE Elimination)</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="subsection-title">2(d). Domain Threat Agents & Regulatory Compliance Analysis</h2>
+  <p>
+    <strong>1. Higher Education Campus Threat Agents:</strong>
+  </p>
+  <ul>
+    <li><strong>Threat Agent 1 (Rogue Student Scalper Bot):</strong> Automated scripts attempting to scalp all window desks at 08:00 AM. Mitigated via TOTP MFA, request rate-limiting, and SQL reservation overlap locks.</li>
+    <li><strong>Threat Agent 2 (External Credential Stuffer):</strong> Attackers using leaked university password lists. Mitigated via 10-round salted bcrypt hashing and mandatory second-factor TOTP challenges.</li>
+  </ul>
+
+  <p>
+    <strong>2. Regulatory Compliance Mapping:</strong>
+  </p>
+  <ul>
+    <li><strong>GDPR Article 25 (Privacy by Design):</strong> Data minimization restricts personal identity disclosure; students see only seat availability status, whereas names are restricted to authenticated librarians.</li>
+    <li><strong>GDPR Article 32 (Security of Processing):</strong> End-to-end transport layer encryption (HTTPS/TLS) over port 443, private Docker bridge networks, and salted bcrypt cryptographic storage.</li>
+    <li><strong>DPDPA 2023 (Digital Personal Data Protection Act - India):</strong> Clear purpose limitation for physical seat allocation and student right to record deletion upon university graduation.</li>
+  </ul>
+
+  <!-- Verification Artifacts -->
+  <h2 class="subsection-title">Verification Artifacts & Repository Manifest</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Artifact File</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>docker-compose.yml</code></td>
+        <td>Docker Compose specification running 3 backend instances and Nginx load balancer.</td>
+      </tr>
+      <tr>
+        <td><code>backend/Dockerfile</code></td>
+        <td>Hardened multi-stage Dockerfile running <code>node:20-alpine</code> under non-root <code>node</code> user.</td>
+      </tr>
+      <tr>
+        <td><code>nginx/nginx.conf</code></td>
+        <td>Production Nginx configuration with <code>proxy_next_upstream</code> zero-loss failover.</td>
+      </tr>
+      <tr>
+        <td><code>benchmarks/load-test.js</code></td>
+        <td>Automated 1,000-request benchmark tool measuring throughput, latency, and load distribution.</td>
+      </tr>
+      <tr>
+        <td><code>benchmarks/failover-test.js</code></td>
+        <td>High-availability test script executing mid-flight container crashes and measuring error rates.</td>
+      </tr>
+      <tr>
+        <td><code>backend/security-test.js</code></td>
+        <td>Security audit script validating bcrypt hashes, TOTP MFA, and RBAC 401/403 controls.</td>
+      </tr>
+      <tr>
+        <td><code>assignment_3_report.md</code></td>
+        <td>Full Markdown report stored in repository root and pushed to branch <code>assignment-3</code>.</td>
+      </tr>
+      <tr>
+        <td><code>video_script.md</code></td>
+        <td>Timed 3-minute video presentation and demonstration script with screen cues.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>StudySpace – BACSE344 Digital Assignment 3 (DA-3)</span>
+    <span>GitHub Branch: assignment-3 | Live App: study-space-navy.vercel.app</span>
+  </div>
+
+</body>
+</html>
